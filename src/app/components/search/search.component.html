@@ -1,0 +1,12 @@
+<input
+  [formControl]="searchFormControl"
+  type="text"
+  name="Search"
+  id="search"
+/>
+
+<ul>
+  @for (item of results(); track $index) {
+  <li>{{ item.name }} ({{ item.date }}) - {{ item.type }}</li>
+  }
+</ul>
