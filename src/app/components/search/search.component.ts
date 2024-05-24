@@ -42,7 +42,8 @@ export class SearchComponent implements OnInit, OnDestroy {
                   type: 'movie',
                   name: item.title,
                   date: item.release_date,
-                  poster: item.poster_path,
+                  // TODO query API for base URL and available sizes
+                  poster: `https://image.tmdb.org/t/p/w92${item.poster_path}`,
                   popularity: item.popularity,
                 };
               })
@@ -57,7 +58,8 @@ export class SearchComponent implements OnInit, OnDestroy {
                   type: 'tv',
                   name: item.name,
                   date: item.first_air_date,
-                  poster: item.poster_path,
+                  // TODO query API for base URL and available sizes
+                  poster: `https://image.tmdb.org/t/p/w92${item.poster_path}`,
                   popularity: item.popularity,
                 };
               })
@@ -69,5 +71,9 @@ export class SearchComponent implements OnInit, OnDestroy {
           )
         );
       });
+  }
+
+  handleImageError(event: Event) {
+    (event.target as HTMLImageElement).src = '/poster-error.png';
   }
 }

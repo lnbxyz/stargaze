@@ -2,11 +2,27 @@
   [formControl]="searchFormControl"
   type="text"
   name="Search"
-  id="search"
+  placeholder="Search for a movie or TV show"
+  autocomplete="off"
+  class="search"
 />
 
-<ul>
-  @for (item of results(); track $index) {
-  <li>{{ item.name }} ({{ item.date }}) - {{ item.type }}</li>
+<ul class="results">
+  @for (result of results(); track $index) {
+  <li class="result">
+    <img
+      class="result-poster"
+      [src]="result.poster"
+      [alt]="result.name + ' poster'"
+      (error)="handleImageError($event)"
+    />
+    <div class="result-details">
+      <span class="result-name">{{ result.name }}</span>
+      <span class="result-description">
+        {{ result.type === "tv" ? "TV Show" : "Movie" }} ·
+        {{ result.date ? (result.date | date : "y") : "Unknown" }}
+      </span>
+    </div>
+  </li>
   }
 </ul>
