@@ -6,11 +6,14 @@
     <s-media [media]="selected()[0]" size="small"></s-media>
     <span>and</span>
     <s-media [media]="selected()[1]" size="small"></s-media>
+    <button class="reset" (click)="reset()">reset</button>
   </header>
 
   <section>
     @for (actor of actors(); track $index) {
     <s-actor [actor]="actor"></s-actor>
+    } @empty {
+    <p>no actors in common!</p>
     }
   </section>
 </main>

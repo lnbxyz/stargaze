@@ -24,7 +24,9 @@ import { ActorComponent } from './components/actor/actor.component';
 })
 export class AppComponent {
   selected = signal<Media[]>([]);
-  searchPlaceholder = computed(() => `compare with ${this.selected()[0].name}`);
+  searchPlaceholder = computed(
+    () => `compare with ${this.selected()[0]?.name}`
+  );
   showResult = computed(() => this.selected().length === 2);
 
   // TODO move results to separate component
@@ -41,6 +43,10 @@ export class AppComponent {
     if (this.showResult()) {
       this.getResult();
     }
+  }
+
+  reset() {
+    this.selected.set([]);
   }
 
   getResult() {

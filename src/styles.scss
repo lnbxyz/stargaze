@@ -11,7 +11,8 @@
 }
 
 body,
-input {
+input,
+button {
   font-family: "Onest", -apple-system, BlinkMacSystemFont, avenir next, avenir,
     segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial,
     sans-serif;
@@ -24,6 +25,7 @@ body {
   padding: 0;
   height: 100vh;
   background-color: var(--color-background);
+  color: var(--color-high-contrast);
 }
 
 * {
