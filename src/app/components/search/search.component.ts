@@ -84,8 +84,11 @@ export class SearchComponent implements OnInit, OnDestroy {
       });
   }
 
-  handleImageError(event: Event) {
-    (event.target as HTMLImageElement).src = '/poster-error.png';
+  handleImageError(index: number) {
+    this.results.update((results) => {
+      results[index].poster = '/poster-error.png';
+      return results;
+    });
   }
 
   onResultClick(result: Media) {
