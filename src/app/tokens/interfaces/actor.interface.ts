@@ -1,16 +1,15 @@
 export interface Actor {
   name: string;
-  shows: ActorShow[];
+  picture: string;
+  media: ActorMedia[];
 }
 
-interface ActorShow {
+interface ActorMedia {
   name: string;
-  episodes: ActorShowEpisode[];
+  credits: ActorMediaCredit[];
 }
 
-interface ActorShowEpisode {
-  name: string;
-  season: number;
-  episodeNumber: number;
+interface ActorMediaCredit {
   character: string;
+  episodeCount: number;
 }

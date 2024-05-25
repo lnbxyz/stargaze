@@ -7,11 +7,18 @@ import { InfoComponent } from './components/info/info.component';
 import { TmdbService } from './services/tmdb.service';
 import { forkJoin, take } from 'rxjs';
 import { Actor } from './tokens/interfaces/actor.interface';
+import { ActorComponent } from './components/actor/actor.component';
 
 @Component({
   selector: 's-root',
   standalone: true,
-  imports: [SearchComponent, CommonModule, MediaComponent, InfoComponent],
+  imports: [
+    SearchComponent,
+    CommonModule,
+    MediaComponent,
+    InfoComponent,
+    ActorComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -56,26 +63,23 @@ export class AppComponent {
 
         result.push({
           name: mediaOneActor.name,
-          shows: [
+          picture: `https://image.tmdb.org/t/p/w185${mediaOneActor.profile_path}`,
+          media: [
             {
               name: this.selected()[0].name,
-              episodes: mediaOneActor.roles.map((role) => {
+              credits: mediaOneActor.roles.map((role) => {
                 return {
-                  name: 'episode',
-                  episodeNumber: 1,
-                  season: 1,
                   character: role.character,
+                  episodeCount: role.episode_count,
                 };
               }),
             },
             {
               name: this.selected()[1].name,
-              episodes: mediaTwoActor.roles.map((role) => {
+              credits: mediaTwoActor.roles.map((role) => {
                 return {
-                  name: 'episode',
-                  episodeNumber: 1,
-                  season: 1,
                   character: role.character,
+                  episodeCount: role.episode_count,
                 };
               }),
             },

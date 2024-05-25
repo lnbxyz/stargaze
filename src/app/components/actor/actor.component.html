@@ -1,0 +1,27 @@
+<div class="actor">
+  <img
+    [src]="actor().picture"
+    [alt]="actor().name"
+    (error)="handleImageError($event)"
+  />
+
+  <div class="actor-details">
+    <span class="actor-name">{{ actor().name }}</span>
+    <ul class="medias">
+      @for (media of actor().media; track $index) {
+      <li>
+        <span class="media-name">{{ media.name }}</span>
+        <ul class="credits">
+          @for (credit of media.credits; track $index) {
+          <li class="credit">
+            {{ credit.character }} ({{ credit.episodeCount }} episode{{
+              credit.episodeCount > 1 ? "s" : ""
+            }})
+          </li>
+          }
+        </ul>
+      </li>
+      }
+    </ul>
+  </div>
+</div>
