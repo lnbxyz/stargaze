@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Subject, debounceTime, forkJoin, map, take, takeUntil } from 'rxjs';
 import { TmdbService } from '../../services/tmdb.service';
@@ -16,6 +23,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   searchFormControl = new FormControl<string | null>('');
   end = new Subject<void>();
   results = signal<Media[]>([]);
+  itemSelected = output<Media>();
+  placeholder = input('search for a TV show or movie');
 
   constructor(private tmdbService: TmdbService) {}
 
@@ -45,6 +54,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                   // TODO query API for base URL and available sizes
                   poster: `https://image.tmdb.org/t/p/w92${item.poster_path}`,
                   popularity: item.popularity,
+                  original: item,
                 };
               })
             )
@@ -61,6 +71,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                   // TODO query API for base URL and available sizes
                   poster: `https://image.tmdb.org/t/p/w92${item.poster_path}`,
                   popularity: item.popularity,
+                  original: item,
                 };
               })
             )
@@ -75,5 +86,9 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   handleImageError(event: Event) {
     (event.target as HTMLImageElement).src = '/poster-error.png';
+  }
+
+  onResultClick(result: Media) {
+    this.itemSelected.emit(result);
   }
 }

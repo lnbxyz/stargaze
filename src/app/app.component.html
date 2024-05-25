@@ -1,5 +1,41 @@
-<div class="main">
-  <div class="search">
-    <s-search></s-search>
-  </div>
-</div>
+@if (showResult()) {
+
+<main class="result">
+  <header>
+    <span>actors in</span>
+    <s-media [media]="selected()[0]" size="small"></s-media>
+    <span>and</span>
+    <s-media [media]="selected()[1]" size="small"></s-media>
+  </header>
+
+  <section>soon!</section>
+</main>
+
+} @else {
+
+<main class="picker">
+  <section [ngClass]="{ centered: selected().length }">
+    @if (!selected().length) {
+    <div class="search">
+      <s-search (itemSelected)="onItemSelected($event)"></s-search>
+    </div>
+    } @else {
+    <s-media [media]="selected()[0]" size="large"></s-media>
+    }
+  </section>
+
+  <section [ngClass]="{ centered: !selected().length }">
+    @if (selected().length) {
+    <div class="search">
+      <s-search
+        (itemSelected)="onItemSelected($event)"
+        [placeholder]="searchPlaceholder()"
+      ></s-search>
+    </div>
+    } @else {
+    <s-info></s-info>
+    }
+  </section>
+</main>
+
+}

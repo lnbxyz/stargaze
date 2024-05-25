@@ -1,0 +1,14 @@
+<div [class]="'media ' + size()">
+  <img
+    class="media-poster"
+    [src]="media().poster"
+    [alt]="media().name + ' poster'"
+  />
+  <div class="media-details">
+    <span class="media-name">{{ media().name }}</span>
+    @if (size() === 'medium') {
+
+    <span class="media-description">{{ description() }} </span>
+    }
+  </div>
+</div>

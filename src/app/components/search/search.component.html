@@ -2,14 +2,14 @@
   [formControl]="searchFormControl"
   type="text"
   name="Search"
-  placeholder="Search for a movie or TV show"
+  [placeholder]="placeholder()"
   autocomplete="off"
   class="search"
 />
 
 <ul class="results">
   @for (result of results(); track $index) {
-  <li class="result">
+  <li class="result" (click)="onResultClick(result)">
     <img
       class="result-poster"
       [src]="result.poster"
