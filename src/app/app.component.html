@@ -8,7 +8,19 @@
     <s-media [media]="selected()[1]" size="small"></s-media>
   </header>
 
-  <section>soon!</section>
+  <section>
+    @for (actor of actors(); track $index) {
+    <h2>{{ actor.name }}</h2>
+    @for (media of actor.shows; track $index) {
+    <p>{{ media.name }}</p>
+
+    @for (episode of media.episodes; track $index) {
+    <p>
+      S{{ episode.season }}E{{ episode.episodeNumber }} {{ episode.name }} -
+      {{ episode.character }}
+    </p>
+    } } }
+  </section>
 </main>
 
 } @else {
