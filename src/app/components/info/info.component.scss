@@ -9,25 +9,26 @@
     font-size: 2rem;
     font-weight: 500;
     margin: 0;
+    line-height: 1em;
   }
 
   p {
     font-size: 1.5rem;
     font-weight: 300;
     margin: 0;
+    line-height: 1.25em;
   }
 }
 
 .intro-name {
+  font-size: 2.5rem;
   font-weight: 900;
-  &::after {
-    --intro-logo-size: 32px;
-    background-image: url("/logo.png");
-    background-size: var(--intro-logo-size) var(--intro-logo-size);
-    display: inline-block;
-    width: var(--intro-logo-size);
-    height: var(--intro-logo-size);
-    content: "";
-    vertical-align: super;
-  }
+  background: linear-gradient(
+    to top right,
+    var(--color-primary) 15%,
+    var(--color-accent) 85%
+  );
+  background-clip: border-box;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
