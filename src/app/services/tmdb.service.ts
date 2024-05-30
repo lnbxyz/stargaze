@@ -12,26 +12,17 @@ import { TvAggregatedCredits } from '../tokens/interfaces/tv-aggregated-credits.
 export class TmdbService {
   constructor(private httpClient: HttpClient) {}
 
-  searchMovie(query: string) {
-    const url = 'https://api.themoviedb.org/3/search/movie';
+  search(query: string) {
+    const url = 'https://api.themoviedb.org/3/search/multi';
     const params = new HttpParams({
       fromObject: {
         query,
         api_key: environment.tmdbApiKey,
       },
     });
-    return this.httpClient.get<PagedResponse<MovieResult>>(url, { params });
-  }
-
-  searchTv(query: string) {
-    const url = 'https://api.themoviedb.org/3/search/tv';
-    const params = new HttpParams({
-      fromObject: {
-        query,
-        api_key: environment.tmdbApiKey,
-      },
+    return this.httpClient.get<PagedResponse<TvResult | MovieResult>>(url, {
+      params,
     });
-    return this.httpClient.get<PagedResponse<TvResult>>(url, { params });
   }
 
   tvAggregatedCredits(id: number) {

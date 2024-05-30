@@ -49,29 +49,26 @@ export class AppComponent {
   getResult() {
     // TODO move results to separate component
 
-    forkJoin([
-      this.tmdbService
-        .tvAggregatedCredits(this.selected()[0].original.id)
-        .pipe(take(1)),
-      this.tmdbService
-        .tvAggregatedCredits(this.selected()[1].original.id)
-        .pipe(take(1)),
-    ]).subscribe(([mediaOne, mediaTwo]) => {
+    forkJoin(
+      this.selected().map((item) =>
+        this.tmdbService.tvAggregatedCredits(item.id).pipe(take(1))
+      )
+    ).subscribe((results) => {
       const result: Actor[] = [];
-      mediaOne.cast.forEach((mediaOneActor) => {
-        const mediaTwoActor = mediaTwo.cast.find(
-          (item) => mediaOneActor.name === item.name
+      results[0].cast.forEach((castMember) => {
+        const match = results[1].cast.find(
+          (item) => castMember.name === item.name
         );
-        if (!mediaTwoActor) return;
+        if (!match) return;
 
         result.push({
-          id: mediaOneActor.id,
-          name: mediaOneActor.name,
-          picture: mediaOneActor.profile_path,
+          id: castMember.id,
+          name: castMember.name,
+          picture: castMember.profile_path,
           media: [
             {
               name: this.selected()[0].name,
-              credits: mediaOneActor.roles.map((role) => {
+              credits: castMember.roles.map((role) => {
                 return {
                   character: role.character,
                   episodeCount: role.episode_count,
@@ -80,7 +77,7 @@ export class AppComponent {
             },
             {
               name: this.selected()[1].name,
-              credits: mediaTwoActor.roles.map((role) => {
+              credits: match.roles.map((role) => {
                 return {
                   character: role.character,
                   episodeCount: role.episode_count,

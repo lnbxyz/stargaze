@@ -9,7 +9,7 @@
 />
 
 <ul class="results">
-  @for (result of results(); track result.original.id; let i = $index) {
+  @for (result of results(); track (result.type + result.id); let i = $index) {
   <li class="result" (click)="onResultClick(result)">
     @if (result.poster) {
     <img

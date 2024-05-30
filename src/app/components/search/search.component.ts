@@ -7,11 +7,13 @@ import {
   signal,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Subject, debounceTime, forkJoin, map, take, takeUntil } from 'rxjs';
+import { Subject, debounceTime, map, take, takeUntil } from 'rxjs';
 import { TmdbService } from '../../services/tmdb.service';
 import { CommonModule, IMAGE_LOADER, NgOptimizedImage } from '@angular/common';
 import { Media } from '../../tokens/interfaces/media.interface';
 import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
+import { TvResult } from '../../tokens/interfaces/tv-result.interface';
+import { MovieResult } from '../../tokens/interfaces/movie-result.interface';
 
 @Component({
   selector: 's-search',
@@ -48,44 +50,36 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.searchFormControl.valueChanges
       .pipe(takeUntil(this.end), debounceTime(200))
       .subscribe((value) => {
-        forkJoin([
-          this.tmdbService.searchMovie(value ?? '').pipe(
+        this.tmdbService
+          .search(value ?? '')
+          .pipe(
             take(1),
             takeUntil(this.end),
-            map((value) =>
-              value.results.map((item) => {
-                return <Media>{
-                  type: 'movie',
-                  name: item.title,
-                  date: item.release_date,
-                  poster: item.poster_path,
-                  popularity: item.popularity,
-                  original: item,
-                };
-              })
+            map(
+              (value) =>
+                value.results
+                  .map((item) => {
+                    if (!['tv', 'movie'].includes(item.media_type)) {
+                      return null;
+                    }
+                    return <Media>{
+                      id: item.id,
+                      type: item.media_type,
+                      name:
+                        item.media_type === 'tv'
+                          ? (item as TvResult).name
+                          : (item as MovieResult).title,
+                      date:
+                        item.media_type === 'tv'
+                          ? (item as TvResult).first_air_date
+                          : (item as MovieResult).release_date,
+                      poster: item.poster_path,
+                    };
+                  })
+                  .filter((item) => item !== null) as Media[]
             )
-          ),
-          this.tmdbService.searchTv(value ?? '').pipe(
-            take(1),
-            takeUntil(this.end),
-            map((value) =>
-              value.results.map((item) => {
-                return <Media>{
-                  type: 'tv',
-                  name: item.name,
-                  date: item.first_air_date,
-                  poster: item.poster_path,
-                  popularity: item.popularity,
-                  original: item,
-                };
-              })
-            )
-          ),
-        ]).subscribe(([movies, tvShows]) =>
-          this.results.set(
-            [...tvShows, ...movies].sort((a, b) => b.popularity - a.popularity)
           )
-        );
+          .subscribe((response) => this.results.set(response));
       });
   }
 
