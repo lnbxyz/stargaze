@@ -1,9 +1,20 @@
 <div [class]="'media ' + size()">
+  @if (media().poster) {
   <img
-    class="media-poster"
-    [src]="media().poster"
+    class="media-poster shimmer"
+    [width]="imageWidth()"
+    [height]="imageHeight()"
+    [ngSrc]="media().poster ?? ''"
+    [loaderParams]="{ type: 'poster' }"
     [alt]="media().name + ' poster'"
   />
+  } @else {
+  <img
+    class="media-poster"
+    src="/missing-poster.png"
+    [alt]="'Missing poster for ' + media().name"
+  />
+  }
   <div class="media-details">
     <span class="media-name">{{ media().name }}</span>
     @if (size() === 'medium') {

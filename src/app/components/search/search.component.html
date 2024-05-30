@@ -4,18 +4,29 @@
   name="Search"
   [placeholder]="placeholder()"
   autocomplete="off"
+  spellcheck="false"
   class="search"
 />
 
 <ul class="results">
-  @for (result of results(); track $index; let i = $index) {
+  @for (result of results(); track result.original.id; let i = $index) {
   <li class="result" (click)="onResultClick(result)">
+    @if (result.poster) {
+    <img
+      class="result-poster shimmer"
+      width="56"
+      height="83"
+      [ngSrc]="result.poster"
+      [loaderParams]="{ type: 'poster' }"
+      [alt]="result.name + ' poster'"
+    />
+    } @else {
     <img
       class="result-poster"
-      [src]="result.poster"
-      [alt]="result.name + ' poster'"
-      (error)="handleImageError(i)"
+      src="/missing-poster.png"
+      [alt]="'Missing poster for ' + result.name"
     />
+    }
     <div class="result-details">
       <span class="result-name">{{ result.name }}</span>
       <span class="result-description">

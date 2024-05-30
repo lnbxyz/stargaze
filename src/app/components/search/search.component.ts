@@ -9,15 +9,22 @@ import {
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Subject, debounceTime, forkJoin, map, take, takeUntil } from 'rxjs';
 import { TmdbService } from '../../services/tmdb.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, IMAGE_LOADER, NgOptimizedImage } from '@angular/common';
 import { Media } from '../../tokens/interfaces/media.interface';
+import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
 
 @Component({
   selector: 's-search',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
+  imports: [ReactiveFormsModule, CommonModule, NgOptimizedImage],
+  providers: [
+    {
+      provide: IMAGE_LOADER,
+      useValue: TMDB_IMAGE_LOADER,
+    },
+  ],
 })
 export class SearchComponent implements OnInit, OnDestroy {
   searchFormControl = new FormControl<string | null>('');
@@ -51,8 +58,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                   type: 'movie',
                   name: item.title,
                   date: item.release_date,
-                  // TODO query API for base URL and available sizes
-                  poster: `https://image.tmdb.org/t/p/w92${item.poster_path}`,
+                  poster: item.poster_path,
                   popularity: item.popularity,
                   original: item,
                 };
@@ -68,8 +74,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                   type: 'tv',
                   name: item.name,
                   date: item.first_air_date,
-                  // TODO query API for base URL and available sizes
-                  poster: `https://image.tmdb.org/t/p/w92${item.poster_path}`,
+                  poster: item.poster_path,
                   popularity: item.popularity,
                   original: item,
                 };
@@ -82,13 +87,6 @@ export class SearchComponent implements OnInit, OnDestroy {
           )
         );
       });
-  }
-
-  handleImageError(index: number) {
-    this.results.update((results) => {
-      results[index].poster = '/poster-error.png';
-      return results;
-    });
   }
 
   onResultClick(result: Media) {

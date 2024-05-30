@@ -10,7 +10,7 @@
   </header>
 
   <section>
-    @for (actor of actors(); track $index) {
+    @for (actor of actors(); track actor.id) {
     <s-actor [actor]="actor"></s-actor>
     } @empty {
     <p>no actors in common!</p>

@@ -35,10 +35,7 @@ export class AppComponent {
   constructor(private tmdbService: TmdbService) {}
 
   onItemSelected(item: Media) {
-    this.selected.update((selected) => [
-      ...selected,
-      { ...item, poster: item.poster.replace('/w92/', '/w342/') },
-    ]);
+    this.selected.update((selected) => [...selected, item]);
 
     if (this.showResult()) {
       this.getResult();
@@ -68,8 +65,9 @@ export class AppComponent {
         if (!mediaTwoActor) return;
 
         result.push({
+          id: mediaOneActor.id,
           name: mediaOneActor.name,
-          picture: `https://image.tmdb.org/t/p/w185${mediaOneActor.profile_path}`,
+          picture: mediaOneActor.profile_path,
           media: [
             {
               name: this.selected()[0].name,

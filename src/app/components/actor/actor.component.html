@@ -1,9 +1,22 @@
 <div class="actor">
+  @if (actor().picture) {
+  <div class="actor-portrait">
+    <img
+      class="shimmer"
+      width="96"
+      height="144"
+      [ngSrc]="actor().picture"
+      [alt]="actor().name + ' portrait'"
+      [loaderParams]="{ type: 'profile' }"
+    />
+  </div>
+  } @else {
   <img
-    [src]="actor().picture"
-    [alt]="actor().name"
-    (error)="handleImageError($event)"
+    class="actor-portrait"
+    src="/missing-portrait.png"
+    [alt]="'Missing portrait for ' + actor().name"
   />
+  }
 
   <div class="actor-details">
     <span class="actor-name">{{ actor().name }}</span>

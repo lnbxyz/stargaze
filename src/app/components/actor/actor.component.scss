@@ -3,16 +3,6 @@
   flex-direction: row;
   gap: 1rem;
   padding: 1rem;
-
-  img {
-    --actor-image-size: 96px;
-    width: var(--actor-image-size);
-    height: var(--actor-image-size);
-    background-color: var(--color-background);
-    border-radius: calc(var(--actor-image-size) / 2);
-    border: 1px solid var(--color-lowest-contrast);
-    object-fit: cover;
-  }
 }
 
 .actor-details {
@@ -54,4 +44,20 @@
   font-size: 1rem;
   font-weight: 500;
   color: var(--color-high-contrast);
+}
+
+.actor-portrait {
+  --actor-portrait-size: 96px;
+  width: var(--actor-portrait-size);
+  height: var(--actor-portrait-size);
+  background-color: var(--color-background);
+  border-radius: calc(var(--actor-portrait-size) / 2);
+  border: 1px solid var(--color-lowest-contrast);
+  object-fit: cover;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    transform: translateY(-1.25rem);
+  }
 }

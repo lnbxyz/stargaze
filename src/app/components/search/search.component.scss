@@ -20,16 +20,27 @@
 .search {
   padding: 0.75rem 0.5rem;
   font-size: 1.25rem;
-  border: 1px solid var(--color-lowest-contrast);
-  border-radius: 1rem;
   font-weight: 500;
   color: var(--color-high-contrast);
   outline: none;
   flex: initial;
-  background-color: var(--color-background);
+  border-radius: 1rem;
   z-index: 2;
 
-  transition: background-color 100ms ease, filter 100ms ease;
+  --border-thickness: 1px;
+  border: double var(--border-thickness) transparent;
+  background-image: linear-gradient(
+      var(--color-elevated),
+      var(--color-elevated)
+    ),
+    linear-gradient(
+      to right,
+      var(--color-lowest-contrast),
+      var(--color-lowest-contrast)
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  margin: calc(2px - var(--border-thickness));
 
   &::placeholder {
     color: var(--color-low-contrast);
@@ -37,9 +48,16 @@
   }
 
   &:focus {
-    background-color: var(--color-elevated);
-    // TODO
-    // filter: drop-shadow(0 0 0.5rem var(--color-lowest-contrast));
+    --border-thickness: 2px;
+    background-image: linear-gradient(
+        var(--color-elevated),
+        var(--color-elevated)
+      ),
+      linear-gradient(
+        to right,
+        var(--color-primary) -25%,
+        var(--color-accent) 125%
+      );
   }
 }
 

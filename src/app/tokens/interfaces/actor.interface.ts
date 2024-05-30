@@ -1,4 +1,5 @@
 export interface Actor {
+  id: number;
   name: string;
   picture: string;
   media: ActorMedia[];
