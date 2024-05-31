@@ -1,16 +1,18 @@
+import { Media } from './media.interface';
+
 export interface Actor {
   id: number;
   name: string;
   picture: string;
-  media: ActorMedia[];
+  credits: Credit[];
 }
 
-interface ActorMedia {
+export interface Credit {
+  media: Media;
+  characters: Character[];
+}
+
+export interface Character {
   name: string;
-  credits: ActorMediaCredit[];
-}
-
-interface ActorMediaCredit {
-  character: string;
-  episodeCount: number;
+  episodeCount?: number;
 }

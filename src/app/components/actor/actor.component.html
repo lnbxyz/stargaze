@@ -21,15 +21,20 @@
   <div class="actor-details">
     <span class="actor-name">{{ actor().name }}</span>
     <ul class="medias">
-      @for (media of actor().media; track $index) {
+      @for (credit of actor().credits; track $index) {
       <li>
-        <span class="media-name">{{ media.name }}</span>
+        <span class="media-name">
+          {{ credit.media.name }}
+          @if (credit.media.date) {({{ credit.media.date | date : "y" }})}
+        </span>
         <ul class="credits">
-          @for (credit of media.credits; track $index) {
+          @for (character of credit.characters; track $index) {
           <li class="credit">
-            {{ credit.character }} ({{ credit.episodeCount }} episode{{
-              credit.episodeCount > 1 ? "s" : ""
-            }})
+            {{ character.name }}
+            @if (character.episodeCount) { (
+            {{ character.episodeCount }}
+            episode{{ character.episodeCount > 1 ? "s" : "" }}
+            ) }
           </li>
           }
         </ul>

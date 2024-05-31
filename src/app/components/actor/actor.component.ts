@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { Actor } from '../../tokens/interfaces/actor.interface';
-import { IMAGE_LOADER, NgOptimizedImage } from '@angular/common';
+import { CommonModule, IMAGE_LOADER, NgOptimizedImage } from '@angular/common';
 import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
 
 @Component({
@@ -8,7 +8,7 @@ import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
   standalone: true,
   templateUrl: 'actor.component.html',
   styleUrl: 'actor.component.scss',
-  imports: [NgOptimizedImage],
+  imports: [NgOptimizedImage, CommonModule],
   providers: [{ provide: IMAGE_LOADER, useValue: TMDB_IMAGE_LOADER }],
 })
 export class ActorComponent {

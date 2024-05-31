@@ -6,8 +6,10 @@ import { MediaComponent } from './components/media/media.component';
 import { InfoComponent } from './components/info/info.component';
 import { TmdbService } from './services/tmdb.service';
 import { forkJoin, take } from 'rxjs';
-import { Actor } from './tokens/interfaces/actor.interface';
+import { Actor, Character, Credit } from './tokens/interfaces/actor.interface';
 import { ActorComponent } from './components/actor/actor.component';
+import { TvCastMember } from './tokens/interfaces/tmdb/tv-aggregated-credits.interface';
+import { MovieCastMember } from './tokens/interfaces/tmdb/movie-credits.interface';
 
 @Component({
   selector: 's-root',
@@ -51,7 +53,9 @@ export class AppComponent {
 
     forkJoin(
       this.selected().map((item) =>
-        this.tmdbService.tvAggregatedCredits(item.id).pipe(take(1))
+        item.type === 'tv'
+          ? this.tmdbService.tvAggregatedCredits(item.id).pipe(take(1))
+          : this.tmdbService.movieCredits(item.id).pipe(take(1))
       )
     ).subscribe((results) => {
       const result: Actor[] = [];
@@ -65,26 +69,25 @@ export class AppComponent {
           id: castMember.id,
           name: castMember.name,
           picture: castMember.profile_path,
-          media: [
-            {
-              name: this.selected()[0].name,
-              credits: castMember.roles.map((role) => {
-                return {
-                  character: role.character,
-                  episodeCount: role.episode_count,
-                };
-              }),
-            },
-            {
-              name: this.selected()[1].name,
-              credits: match.roles.map((role) => {
-                return {
-                  character: role.character,
-                  episodeCount: role.episode_count,
-                };
-              }),
-            },
-          ],
+          credits: this.selected().map((media, index) => {
+            const cast = [castMember, match][index];
+            return <Credit>{
+              media: media,
+              characters:
+                media.type === 'tv'
+                  ? (cast as TvCastMember).roles.map((role) => {
+                      return <Character>{
+                        name: role.character,
+                        episodeCount: role.episode_count,
+                      };
+                    })
+                  : [
+                      {
+                        name: (cast as MovieCastMember).character,
+                      },
+                    ],
+            };
+          }),
         });
       });
 

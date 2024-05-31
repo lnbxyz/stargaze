@@ -12,8 +12,8 @@ import { TmdbService } from '../../services/tmdb.service';
 import { CommonModule, IMAGE_LOADER, NgOptimizedImage } from '@angular/common';
 import { Media } from '../../tokens/interfaces/media.interface';
 import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
-import { TvResult } from '../../tokens/interfaces/tv-result.interface';
-import { MovieResult } from '../../tokens/interfaces/movie-result.interface';
+import { TvResult } from '../../tokens/interfaces/tmdb/tv-result.interface';
+import { MovieResult } from '../../tokens/interfaces/tmdb/movie-result.interface';
 
 @Component({
   selector: 's-search',
