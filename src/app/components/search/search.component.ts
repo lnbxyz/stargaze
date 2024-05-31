@@ -7,7 +7,15 @@ import {
   signal,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Subject, debounceTime, map, take, takeUntil } from 'rxjs';
+import {
+  Subject,
+  concatMap,
+  debounceTime,
+  map,
+  of,
+  take,
+  takeUntil,
+} from 'rxjs';
 import { TmdbService } from '../../services/tmdb.service';
 import { CommonModule, IMAGE_LOADER, NgOptimizedImage } from '@angular/common';
 import { Media } from '../../tokens/interfaces/media.interface';
@@ -55,9 +63,27 @@ export class SearchComponent implements OnInit, OnDestroy {
           .pipe(
             take(1),
             takeUntil(this.end),
+            concatMap((result) => {
+              if (
+                result.results.filter((item) =>
+                  ['tv', 'movie'].includes(item.media_type)
+                ).length <
+                result.results.length / 2
+              ) {
+                return this.tmdbService.search(value ?? '', 2).pipe(
+                  take(1),
+                  takeUntil(this.end),
+                  map((newResult) => {
+                    result.results = [...result.results, ...newResult.results];
+                    return result;
+                  })
+                );
+              }
+              return of(result);
+            }),
             map(
-              (value) =>
-                value.results
+              (result) =>
+                result.results
                   .map((item) => {
                     if (!['tv', 'movie'].includes(item.media_type)) {
                       return null;

@@ -13,11 +13,12 @@ import { MovieCredits } from '../tokens/interfaces/tmdb/movie-credits.interface'
 export class TmdbService {
   constructor(private httpClient: HttpClient) {}
 
-  search(query: string) {
+  search(query: string, page = 1) {
     const url = 'https://api.themoviedb.org/3/search/multi';
     const params = new HttpParams({
       fromObject: {
         query,
+        page,
         api_key: environment.tmdbApiKey,
       },
     });
