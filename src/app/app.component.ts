@@ -57,12 +57,10 @@ export class AppComponent {
           ? this.tmdbService.tvAggregatedCredits(item.id).pipe(take(1))
           : this.tmdbService.movieCredits(item.id).pipe(take(1))
       )
-    ).subscribe((results) => {
+    ).subscribe(([one, two]) => {
       const result: Actor[] = [];
-      results[0].cast.forEach((castMember) => {
-        const match = results[1].cast.find(
-          (item) => castMember.name === item.name
-        );
+      one.cast.forEach((castMember) => {
+        const match = two.cast.find((item) => castMember.name === item.name);
         if (!match) return;
 
         result.push({
