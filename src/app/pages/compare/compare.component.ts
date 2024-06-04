@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, effect, signal } from '@angular/core';
 import { MediaComponent } from '../../components/media/media.component';
 import { InfoComponent } from '../../components/info/info.component';
 import { TmdbService } from '../../services/tmdb.service';
@@ -29,9 +29,11 @@ export class CompareComponent implements OnInit {
     public storeService: StoreService,
     private router: Router
   ) {
-    if (this.storeService.media().length < 2) {
-      this.router.navigate(['']);
-    }
+    effect(() => {
+      if (this.storeService.media().length < 2) {
+        this.router.navigate(['']);
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -84,6 +86,6 @@ export class CompareComponent implements OnInit {
   }
 
   reset() {
-    // TODO
+    this.storeService.media.set([]);
   }
 }

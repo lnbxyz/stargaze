@@ -2,6 +2,7 @@ import {
   Component,
   OnDestroy,
   OnInit,
+  effect,
   input,
   output,
   signal,
@@ -22,6 +23,7 @@ import { Media } from '../../tokens/interfaces/media.interface';
 import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
 import { TvResult } from '../../tokens/interfaces/tmdb/tv-result.interface';
 import { MovieResult } from '../../tokens/interfaces/tmdb/movie-result.interface';
+import { StoreService } from '../../services/store.service';
 
 @Component({
   selector: 's-search',
@@ -43,7 +45,16 @@ export class SearchComponent implements OnInit, OnDestroy {
   itemSelected = output<Media>();
   placeholder = input('search for a TV show or movie');
 
-  constructor(private tmdbService: TmdbService) {}
+  constructor(
+    private tmdbService: TmdbService,
+    private storeService: StoreService
+  ) {
+    effect(() => {
+      if (this.storeService.media().length > -1) {
+        this.searchFormControl.reset();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.listenToChanges();
@@ -58,8 +69,13 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.searchFormControl.valueChanges
       .pipe(takeUntil(this.end), debounceTime(200))
       .subscribe((value) => {
+        if (!value) {
+          this.results.set([]);
+          return;
+        }
+
         this.tmdbService
-          .search(value ?? '')
+          .search(value)
           .pipe(
             take(1),
             takeUntil(this.end),

@@ -1,4 +1,5 @@
 <div class="result">
+  @if (storeService.media().length) {
   <header>
     <span>actors in</span>
     <s-media [media]="storeService.media()[0]" size="small" />
@@ -6,6 +7,7 @@
     <s-media [media]="storeService.media()[1]" size="small" />
     <button class="reset" (click)="reset()">reset</button>
   </header>
+  }
 
   <section>
     @for (actor of actors(); track actor.id) {
