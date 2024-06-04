@@ -6,22 +6,23 @@
   justify-content: center;
 
   h1 {
-    font-size: 2rem;
-    font-weight: 500;
+    font-size: 1.25rem;
+    font-weight: 300;
     margin: 0;
     line-height: 1em;
+    color: var(--color-low-contrast);
   }
 
   p {
     font-size: 1.5rem;
-    font-weight: 300;
+    font-weight: 500;
     margin: 0;
     line-height: 1.25em;
   }
 }
 
 .intro-name {
-  font-size: 2.5rem;
+  font-size: 4rem;
   font-weight: 900;
   background: linear-gradient(
     to top right,
