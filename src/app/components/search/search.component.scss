@@ -29,10 +29,7 @@
 
   --border-thickness: 1px;
   border: double var(--border-thickness) transparent;
-  background-image: linear-gradient(
-      var(--color-elevated),
-      var(--color-elevated)
-    ),
+  background-image: linear-gradient(var(--color-surface), var(--color-surface)),
     linear-gradient(
       to right,
       var(--color-lowest-contrast),
@@ -50,8 +47,8 @@
   &:focus {
     --border-thickness: 2px;
     background-image: linear-gradient(
-        var(--color-elevated),
-        var(--color-elevated)
+        var(--color-surface),
+        var(--color-surface)
       ),
       linear-gradient(
         to right,

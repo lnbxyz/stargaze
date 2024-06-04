@@ -1,0 +1,17 @@
+<div class="result">
+  <header>
+    <span>actors in</span>
+    <s-media [media]="storeService.media()[0]" size="small" />
+    <span>and</span>
+    <s-media [media]="storeService.media()[1]" size="small" />
+    <button class="reset" (click)="reset()">reset</button>
+  </header>
+
+  <section>
+    @for (actor of actors(); track actor.id) {
+    <s-actor [actor]="actor" />
+    } @empty {
+    <p>no actors in common!</p>
+    }
+  </section>
+</div>

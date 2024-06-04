@@ -1,0 +1,24 @@
+<div class="picker">
+  <section>
+    @if (!storeService.media().length) {
+    <div class="search">
+      <s-search (itemSelected)="onItemSelected($event)"></s-search>
+    </div>
+    } @else {
+    <s-media [media]="storeService.media()[0]" size="large"></s-media>
+    }
+  </section>
+
+  <section>
+    @if (storeService.media().length) {
+    <div class="search">
+      <s-search
+        (itemSelected)="onItemSelected($event)"
+        [placeholder]="searchPlaceholder()"
+      ></s-search>
+    </div>
+    } @else {
+    <s-info></s-info>
+    }
+  </section>
+</div>
