@@ -5,6 +5,7 @@ import { MediaComponent } from '../../components/media/media.component';
 import { InfoComponent } from '../../components/info/info.component';
 import { StoreService } from '../../services/store.service';
 import { Router } from '@angular/router';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 's-home',
@@ -12,10 +13,30 @@ import { Router } from '@angular/router';
   imports: [SearchComponent, MediaComponent, InfoComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
+  animations: [
+    trigger('slideIn', [
+      transition(':enter', [
+        style({
+          height: 0,
+          margin: 0,
+          opacity: 0,
+          transform: 'translateY(-8rem)',
+        }),
+        animate(
+          '500ms cubic-bezier(0.22, 1, 0.36, 1)',
+          style({
+            height: '*',
+            margin: '*',
+            opacity: 1,
+            transform: 'translateY(0)',
+          })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class HomeComponent {
-  choice = computed(() => this.storeService.media()[0]);
-  searchPlaceholder = computed(() => `compare with ${this.choice()?.name}`);
+  choice = computed<Media | undefined>(() => this.storeService.media()[0]);
 
   constructor(public storeService: StoreService, private router: Router) {
     this.storeService.media.set([]);
@@ -25,9 +46,5 @@ export class HomeComponent {
         this.router.navigate(['compare']);
       }
     });
-  }
-
-  onItemSelected(item: Media) {
-    this.storeService.media.update((media) => [...media, item]);
   }
 }

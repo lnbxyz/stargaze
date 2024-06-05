@@ -1,21 +1,22 @@
 import {
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
-  effect,
-  input,
-  output,
   signal,
+  viewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   Subject,
   concatMap,
   debounceTime,
+  filter,
   map,
   of,
   take,
   takeUntil,
+  tap,
 } from 'rxjs';
 import { TmdbService } from '../../services/tmdb.service';
 import { CommonModule, IMAGE_LOADER, NgOptimizedImage } from '@angular/common';
@@ -24,6 +25,7 @@ import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
 import { TvResult } from '../../tokens/interfaces/tmdb/tv-result.interface';
 import { MovieResult } from '../../tokens/interfaces/tmdb/movie-result.interface';
 import { StoreService } from '../../services/store.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 's-search',
@@ -37,24 +39,49 @@ import { StoreService } from '../../services/store.service';
       useValue: TMDB_IMAGE_LOADER,
     },
   ],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({
+          opacity: 0,
+          height: 0,
+          padding: 0,
+          borderWidth: 0,
+        }),
+        animate(
+          '250ms cubic-bezier(0.22, 1, 0.36, 1)',
+          style({
+            opacity: 1,
+            height: '*',
+            padding: '*',
+            borderWidth: '*',
+          })
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '250ms cubic-bezier(0.64, 0, 0.78, 0)',
+          style({
+            opacity: 0,
+            height: 0,
+            padding: 0,
+            borderWidth: 0,
+          })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class SearchComponent implements OnInit, OnDestroy {
   searchFormControl = new FormControl<string | null>('');
   end = new Subject<void>();
   results = signal<Media[]>([]);
-  itemSelected = output<Media>();
-  placeholder = input('search for a TV show or movie');
+  searchRef = viewChild<ElementRef<HTMLInputElement>>('search');
 
   constructor(
     private tmdbService: TmdbService,
     private storeService: StoreService
-  ) {
-    effect(() => {
-      if (this.storeService.media().length > -1) {
-        this.searchFormControl.reset();
-      }
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.listenToChanges();
@@ -67,15 +94,15 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   listenToChanges(): void {
     this.searchFormControl.valueChanges
-      .pipe(takeUntil(this.end), debounceTime(200))
+      .pipe(
+        takeUntil(this.end),
+        tap((value) => !value && this.results.set([])),
+        filter((value) => !!value),
+        debounceTime(200)
+      )
       .subscribe((value) => {
-        if (!value) {
-          this.results.set([]);
-          return;
-        }
-
         this.tmdbService
-          .search(value)
+          .search(value!)
           .pipe(
             take(1),
             takeUntil(this.end),
@@ -125,7 +152,9 @@ export class SearchComponent implements OnInit, OnDestroy {
       });
   }
 
-  onResultClick(result: Media) {
-    this.itemSelected.emit(result);
+  onMediaSelected(selected: Media) {
+    this.storeService.media.update((media) => [...media, selected]);
+    this.searchFormControl.reset();
+    this.searchRef()?.nativeElement.focus();
   }
 }

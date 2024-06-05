@@ -7,6 +7,10 @@
   --color-lowest-contrast: #eaebed;
   --color-background: #fbfbfb;
   --color-surface: #ffffff;
+
+  --curve-ease-in: cubic-bezier(0.64, 0, 0.78, 0);
+  --curve-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --curve-ease-in-out: cubic-bezier(0.85, 0, 0.15, 1);
 }
 
 body,

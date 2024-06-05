@@ -64,7 +64,7 @@
   align-items: center;
   gap: 1rem;
 
-  transition: padding-left 100ms ease;
+  transition: padding-left 100ms var(--curve-ease-in-out);
 
   &:not(:first-child) {
     border-top: 1px solid var(--color-lowest-contrast);
@@ -109,13 +109,13 @@
 .result-name {
   font-size: 1.25rem;
   font-weight: 500;
-  transition: font-weight 100ms ease;
+  transition: font-weight 100ms var(--curve-ease-in-out);
   color: var(--color-high-contrast);
 }
 
 .result-description {
   font-size: 1rem;
   font-weight: 300;
-  transition: font-weight 100ms ease;
+  transition: font-weight 100ms var(--curve-ease-in-out);
   color: var(--color-medium-contrast);
 }

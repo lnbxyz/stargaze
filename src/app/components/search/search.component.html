@@ -1,8 +1,9 @@
 <input
+  #search
   [formControl]="searchFormControl"
   type="text"
   name="Search"
-  [placeholder]="placeholder()"
+  placeholder="search for a TV show or movie"
   autocomplete="off"
   spellcheck="false"
   class="search"
@@ -10,7 +11,7 @@
 
 <ul class="results">
   @for (result of results(); track (result.type + result.id); let i = $index) {
-  <li class="result" (click)="onResultClick(result)">
+  <li class="result" (click)="onMediaSelected(result)" [@fadeInOut]>
     @if (result.poster) {
     <img
       class="result-poster shimmer"

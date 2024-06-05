@@ -4,14 +4,12 @@
 
 <section>
   @if (choice()) {
-
-  <div class="compare">
+  <div class="compare" [@slideIn]>
     <span>compare with</span>
-    <s-media [media]="choice()" size="medium" />
+    <s-media [media]="choice()!" size="medium" />
   </div>
-
   }
   <div class="search">
-    <s-search (itemSelected)="onItemSelected($event)" />
+    <s-search />
   </div>
 </section>
