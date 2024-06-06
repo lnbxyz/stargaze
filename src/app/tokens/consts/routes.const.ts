@@ -1,14 +1,14 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from '../../pages/home/home.component';
-import { CompareComponent } from '../../pages/compare/compare.component';
+import { HomePageComponent } from '../../pages/home/home.component';
+import { ResultPageComponent } from '../../pages/result/result.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: HomePageComponent,
   },
   {
-    path: 'compare',
-    component: CompareComponent,
+    path: 'result',
+    component: ResultPageComponent,
   },
 ];

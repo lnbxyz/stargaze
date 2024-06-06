@@ -35,7 +35,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
     ]),
   ],
 })
-export class HomeComponent {
+export class HomePageComponent {
   choice = computed<Media | undefined>(() => this.storeService.media()[0]);
 
   constructor(public storeService: StoreService, private router: Router) {
@@ -43,7 +43,7 @@ export class HomeComponent {
 
     effect(() => {
       if (this.storeService.media().length === 2) {
-        this.router.navigate(['compare']);
+        this.router.navigate(['result']);
       }
     });
   }

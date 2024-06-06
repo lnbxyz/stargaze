@@ -15,13 +15,13 @@ import { StoreService } from '../../services/store.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 's-compare',
+  selector: 's-result',
   standalone: true,
   imports: [MediaComponent, InfoComponent, ActorComponent],
-  templateUrl: './compare.component.html',
-  styleUrl: './compare.component.scss',
+  templateUrl: './result.component.html',
+  styleUrl: './result.component.scss',
 })
-export class CompareComponent implements OnInit {
+export class ResultPageComponent implements OnInit {
   actors = signal<Actor[]>([]);
 
   constructor(
@@ -85,7 +85,7 @@ export class CompareComponent implements OnInit {
     });
   }
 
-  reset() {
+  onBackPressed() {
     this.storeService.media.set([]);
   }
 }

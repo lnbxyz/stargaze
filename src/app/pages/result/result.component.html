@@ -1,0 +1,23 @@
+<div class="result">
+  <aside class="sidebar">
+    @if (storeService.media().length) {
+    <div class="compare">
+      <button class="back" (click)="onBackPressed()">
+        <img src="arrow-left.svg" />
+        <span> back to home </span>
+      </button>
+      @for (item of storeService.media(); track $index) {
+      <s-media [media]="item" size="small" />
+      }
+    </div>
+    }
+  </aside>
+
+  <section class="actors">
+    @for (actor of actors(); track actor.id) {
+    <s-actor [actor]="actor" />
+    } @empty {
+    <p>no actors in common!</p>
+    }
+  </section>
+</div>
