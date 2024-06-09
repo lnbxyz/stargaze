@@ -26,6 +26,7 @@
   position: sticky;
   top: 0;
   left: 0;
+  align-self: start;
 }
 
 .back {
@@ -56,4 +57,9 @@
   gap: 1rem;
   padding: 1rem;
   height: min-content;
+}
+
+.loading {
+  height: 8rem;
+  border-radius: 1rem;
 }

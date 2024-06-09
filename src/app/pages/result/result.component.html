@@ -14,10 +14,12 @@
   </aside>
 
   <section class="actors">
-    @for (actor of actors(); track actor.id) {
+    @if (loading()) { @for (item of [1,2,3,4,5,6]; track $index) {
+    <div class="loading shimmer"></div>
+    } } @else { @for (actor of actors(); track actor.id) {
     <s-actor [actor]="actor" />
     } @empty {
     <p>no actors in common!</p>
-    }
+    } }
   </section>
 </div>

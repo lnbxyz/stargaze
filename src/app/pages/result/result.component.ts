@@ -23,6 +23,7 @@ import { Router } from '@angular/router';
 })
 export class ResultPageComponent implements OnInit {
   actors = signal<Actor[]>([]);
+  loading = signal(true);
 
   constructor(
     private tmdbService: TmdbService,
@@ -41,6 +42,8 @@ export class ResultPageComponent implements OnInit {
   }
 
   getResult() {
+    this.loading.set(true);
+
     forkJoin(
       this.storeService
         .media()
@@ -82,6 +85,7 @@ export class ResultPageComponent implements OnInit {
       });
 
       this.actors.set(result);
+      this.loading.set(false);
     });
   }
 
