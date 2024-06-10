@@ -2,15 +2,27 @@
   <aside class="sidebar">
     @if (storeService.media().length) {
     <div class="compare">
-      <button class="back" (click)="onBackPressed()">
+      <button class="button back" (click)="onBackPressed()">
         <img src="arrow-left.svg" />
         <span> back to home </span>
       </button>
       @for (item of storeService.media(); track $index) {
-      <s-media [media]="item" size="small" />
+      <div class="compare-item" (click)="removeMedia(item)">
+        <s-media [media]="item" size="small" />
+        <img src="circle-minus.svg" />
+      </div>
+      } @if (!showSearch()) {
+      <button class="button add" (click)="onAddMediaPressed()">
+        <img src="plus.svg" />
+        <span> add </span>
+      </button>
       }
     </div>
-    }
+    @if (showSearch()) {
+    <div class="search" [@smoothInOut]>
+      <s-search [focusOnLoad]="true" />
+    </div>
+    } }
   </aside>
 
   <section class="actors">

@@ -42,6 +42,15 @@ export class MediaComponent {
     }
   });
 
+  title = computed(
+    () =>
+      `${this.media().name}${
+        this.size() === 'small' && this.media().date
+          ? ' (' + this.datePipe.transform(this.media().date, 'y') + ')'
+          : ''
+      }`
+  );
+
   description = computed(
     () =>
       `${this.media().type === 'tv' ? 'TV Show' : 'Movie'}${

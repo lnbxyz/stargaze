@@ -1,4 +1,4 @@
-import { Component, OnInit, effect, signal } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import { MediaComponent } from '../../components/media/media.component';
 import { InfoComponent } from '../../components/info/info.component';
 import { TmdbService } from '../../services/tmdb.service';
@@ -13,57 +13,118 @@ import { TvCastMember } from '../../tokens/interfaces/tmdb/tv-aggregated-credits
 import { MovieCastMember } from '../../tokens/interfaces/tmdb/movie-credits.interface';
 import { StoreService } from '../../services/store.service';
 import { Router } from '@angular/router';
+import { SearchComponent } from '../../components/search/search.component';
+import { CommonModule } from '@angular/common';
+import { Media } from '../../tokens/interfaces/media.interface';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 's-result',
   standalone: true,
-  imports: [MediaComponent, InfoComponent, ActorComponent],
+  imports: [
+    CommonModule,
+    MediaComponent,
+    InfoComponent,
+    ActorComponent,
+    SearchComponent,
+  ],
   templateUrl: './result.component.html',
   styleUrl: './result.component.scss',
+  animations: [
+    trigger('smoothInOut', [
+      transition(':enter', [
+        style({
+          flex: 0,
+          height: 0,
+          opacity: 0,
+        }),
+        animate(
+          '500ms cubic-bezier(0.22, 1, 0.36, 1)',
+          style({
+            flex: '*',
+            height: '*',
+            opacity: 1,
+          })
+        ),
+      ]),
+      transition(':leave', [
+        style({
+          flex: '*',
+          height: '*',
+          opacity: 1,
+        }),
+        animate(
+          '500ms cubic-bezier(0.22, 1, 0.36, 1)',
+          style({
+            flex: 0,
+            height: 0,
+            opacity: 0,
+          })
+        ),
+      ]),
+    ]),
+  ],
 })
-export class ResultPageComponent implements OnInit {
+export class ResultPageComponent {
   actors = signal<Actor[]>([]);
   loading = signal(true);
+  showSearch = signal(false);
 
   constructor(
     private tmdbService: TmdbService,
     public storeService: StoreService,
     private router: Router
   ) {
-    effect(() => {
-      if (this.storeService.media().length < 2) {
-        this.router.navigate(['']);
+    effect(
+      () => {
+        if (this.storeService.media().length < 2) {
+          this.router.navigate(['']);
+        } else {
+          this.showSearch.set(false);
+          this.getResult([...this.storeService.media()]);
+        }
+      },
+      {
+        allowSignalWrites: true,
       }
-    });
+    );
   }
 
-  ngOnInit(): void {
-    this.getResult();
-  }
-
-  getResult() {
+  getResult(media: Media[]) {
     this.loading.set(true);
 
     forkJoin(
-      this.storeService
-        .media()
-        .map((item) =>
-          item.type === 'tv'
-            ? this.tmdbService.tvAggregatedCredits(item.id).pipe(take(1))
-            : this.tmdbService.movieCredits(item.id).pipe(take(1))
-        )
-    ).subscribe(([one, two]) => {
+      media.map((item) =>
+        item.type === 'tv'
+          ? this.tmdbService.tvAggregatedCredits(item.id).pipe(take(1))
+          : this.tmdbService.movieCredits(item.id).pipe(take(1))
+      )
+    ).subscribe((results) => {
       const result: Actor[] = [];
-      one.cast.forEach((castMember) => {
-        const match = two.cast.find((item) => castMember.name === item.name);
-        if (!match) return;
+      const first = results.shift();
+
+      if (!first) return;
+
+      first.cast.forEach((castMember) => {
+        const matches: Array<TvCastMember | MovieCastMember> = [];
+
+        results.forEach((result) => {
+          const match = result.cast.find(
+            (item) => castMember.name === item.name
+          );
+          if (match) {
+            matches.push(match);
+          }
+        });
+
+        if (matches.length !== media.length - 1) return;
 
         result.push({
           id: castMember.id,
           name: castMember.name,
           picture: castMember.profile_path,
-          credits: this.storeService.media().map((media, index) => {
-            const cast = [castMember, match][index];
+          credits: media.map((media, index) => {
+            const cast = [castMember, ...matches][index];
             return <Credit>{
               media: media,
               characters:
@@ -91,5 +152,15 @@ export class ResultPageComponent implements OnInit {
 
   onBackPressed() {
     this.storeService.media.set([]);
+  }
+
+  onAddMediaPressed() {
+    this.showSearch.set(true);
+  }
+
+  removeMedia(media: Media) {
+    this.storeService.media.update((current) =>
+      current.filter((item) => item.id !== media.id)
+    );
   }
 }

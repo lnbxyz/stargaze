@@ -1,8 +1,10 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   OnDestroy,
   OnInit,
+  input,
   signal,
   viewChild,
 } from '@angular/core';
@@ -72,11 +74,12 @@ import { animate, style, transition, trigger } from '@angular/animations';
     ]),
   ],
 })
-export class SearchComponent implements OnInit, OnDestroy {
+export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
   searchFormControl = new FormControl<string | null>('');
   end = new Subject<void>();
   results = signal<Media[]>([]);
   searchRef = viewChild<ElementRef<HTMLInputElement>>('search');
+  focusOnLoad = input(false);
 
   constructor(
     private tmdbService: TmdbService,
@@ -85,6 +88,12 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.listenToChanges();
+  }
+
+  ngAfterViewInit(): void {
+    if (this.focusOnLoad()) {
+      this.searchRef()?.nativeElement.focus();
+    }
   }
 
   ngOnDestroy(): void {
