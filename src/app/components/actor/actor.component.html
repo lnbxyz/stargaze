@@ -30,7 +30,7 @@
         <ul class="credits">
           @for (character of credit.characters; track $index) {
           <li class="credit">
-            {{ character.name }}
+            {{ character.name || "Unknown" }}
             @if (character.episodeCount) { ({{
               character.episodeCount
             }}
