@@ -1,13 +1,33 @@
-@if (storeService.media().length) {
+@if (media().length) {
 <div class="compare">
   <button class="button back" (click)="onBackPressed()">
     <img src="arrow-left.svg" />
     <span> back to home </span>
   </button>
-  @for (item of storeService.media(); track $index) {
-  <div class="compare-item" (click)="removeMedia(item)">
-    <s-media [media]="item" size="small" />
-    <img src="circle-minus.svg" />
+
+  @for (item of media(); track $index) {
+  <div class="compare-item" (click)="removeMedia(item)" [@smoothInOut]>
+    <div class="compare-item-icon">
+      @if (item.poster) {
+      <img
+        class="compare-item-poster shimmer"
+        [width]="28"
+        [height]="41"
+        [ngSrc]="item.poster"
+        [loaderParams]="{ type: 'poster' }"
+        [alt]="item.name + ' poster'"
+      />
+      } @else {
+      <img
+        class="compare-item-poster"
+        src="/missing-poster.png"
+        [alt]="'Missing poster for ' + item.name"
+      />
+      }
+      <img class="compare-item-delete" src="trash.svg" />
+    </div>
+
+    <span class="compare-item-name">{{ item.name }}</span>
   </div>
   } @if (!showSearch()) {
   <button class="button add" (click)="onAddMediaPressed()">

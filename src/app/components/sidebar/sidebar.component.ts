@@ -1,16 +1,25 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { StoreService } from '../../services/store.service';
 import { Media } from '../../tokens/interfaces/media.interface';
 import { MediaComponent } from '../media/media.component';
 import { SearchComponent } from '../search/search.component';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { DatePipe, IMAGE_LOADER, NgOptimizedImage } from '@angular/common';
+import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
 
 @Component({
   selector: 's-sidebar',
   standalone: true,
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
-  imports: [MediaComponent, SearchComponent],
+  imports: [MediaComponent, SearchComponent, NgOptimizedImage],
+  providers: [
+    DatePipe,
+    {
+      provide: IMAGE_LOADER,
+      useValue: TMDB_IMAGE_LOADER,
+    },
+  ],
   animations: [
     trigger('smoothInOut', [
       transition(':enter', [
@@ -49,7 +58,18 @@ import { animate, style, transition, trigger } from '@angular/animations';
 export class SidebarComponent {
   showSearch = signal(false);
 
-  constructor(public storeService: StoreService) {
+  media = computed(() =>
+    this.storeService.media().map((item) => {
+      return {
+        ...item,
+        name: `${item.name}${
+          item.date ? ' (' + this.datePipe.transform(item.date, 'y') + ')' : ''
+        }`,
+      };
+    })
+  );
+
+  constructor(public storeService: StoreService, private datePipe: DatePipe) {
     effect(
       () => {
         if (this.storeService.media().length) {

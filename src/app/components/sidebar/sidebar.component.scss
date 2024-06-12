@@ -27,30 +27,67 @@
 
 .compare-item {
   display: flex;
-  align-self: stretch;
-  padding: 0.25rem;
-  border-radius: 0.5rem;
-  transition: background 100ms var(--curve-ease-out);
+  flex-direction: row;
+  align-items: center;
   gap: 0.5rem;
-
-  :first-child {
-    flex: auto;
-  }
-
-  img {
-    flex: initial;
-    opacity: 0;
-    transition: opacity 100ms var(--curve-ease-out);
-  }
+  padding: 0.25rem 1rem 0.25rem 0.5rem;
+  border-radius: 0.75rem;
+  position: relative;
 
   &:hover {
-    background: var(--color-lowest-contrast);
     cursor: pointer;
+    background: var(--color-red-20);
 
-    img {
+    .compare-item-name {
+      color: var(--color-red);
+      font-weight: 500;
+    }
+
+    .compare-item-poster {
+      opacity: 0;
+      transform: translateX(-0.5rem);
+    }
+
+    .compare-item-delete {
       opacity: 1;
+      transform: translateX(0);
     }
   }
+}
+
+.compare-item-icon {
+  height: 2.75rem;
+  width: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.compare-item-delete {
+  position: absolute;
+  opacity: 0;
+  transform: translateX(0.5rem);
+  transition: opacity 100ms var(--curve-ease-in-out),
+    transform 250ms var(--curve-ease-in-out);
+}
+
+.compare-item-poster {
+  width: 28px;
+  height: 41px;
+  background-color: var(--color-background);
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-lowest-contrast);
+  object-fit: cover;
+  opacity: 1;
+  transition: opacity 100ms var(--curve-ease-in-out),
+    transform 250ms var(--curve-ease-in-out);
+}
+
+.compare-item-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-high-contrast);
+  transition: font-weight 100ms var(--curve-ease-in-out);
 }
 
 .button {
