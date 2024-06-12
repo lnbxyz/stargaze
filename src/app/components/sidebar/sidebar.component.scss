@@ -16,7 +16,6 @@
   flex: initial;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   font-size: 1.25rem;
   font-weight: 300;
   color: var(--color-medium-contrast);
@@ -159,4 +158,8 @@
   font-weight: 500;
   color: var(--color-medium-contrast);
   transition: font-weight 100ms var(--curve-ease-in-out);
+}
+
+.compare > * + * {
+  margin-top: 0.5rem;
 }
