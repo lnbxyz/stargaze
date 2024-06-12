@@ -137,9 +137,16 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
               (result) =>
                 result.results
                   .map((item) => {
-                    if (!['tv', 'movie'].includes(item.media_type)) {
+                    if (
+                      !['tv', 'movie'].includes(item.media_type) ||
+                      this.storeService
+                        .media()
+                        .map((media) => media.id)
+                        .includes(item.id)
+                    ) {
                       return null;
                     }
+
                     return <Media>{
                       id: item.id,
                       type: item.media_type,
