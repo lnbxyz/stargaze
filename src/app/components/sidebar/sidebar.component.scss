@@ -10,7 +10,6 @@
   align-self: start;
   padding: 1rem 1rem 0 1rem;
   width: 24rem;
-  gap: 1rem;
 }
 
 .compare {
@@ -31,7 +30,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.25rem 1rem 0.25rem 0.5rem;
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   position: relative;
 
   &:hover {
@@ -90,37 +89,74 @@
   transition: font-weight 100ms var(--curve-ease-in-out);
 }
 
+.search {
+  flex: auto;
+  overflow: auto;
+  margin-top: 0.5rem;
+}
+
 .button {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.25rem 0.75rem 0.25rem 0.25rem;
-  background: var(--color-background);
+  gap: 0.5rem;
+  padding: 0.25rem 1rem 0.25rem 0.5rem;
   border: none;
   border-radius: 1rem;
-  cursor: pointer;
-
-  transition: background 100ms var(--curve-ease-in-out);
-
-  &.back {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--color-medium-contrast);
-  }
-
-  &.add {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-high-contrast);
-  }
+  position: relative;
+  background: var(--color-background);
 
   &:hover {
+    cursor: pointer;
     background: var(--color-lowest-contrast);
+
+    .button-text {
+      color: var(--color-high-contrast);
+      font-weight: 700;
+    }
+
+    .button-icon:has(> img + img) {
+      :first-child {
+        opacity: 0;
+        transform: translateX(-0.5rem);
+      }
+
+      :last-child {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
   }
 }
 
-.search {
-  flex: auto;
-  overflow: auto;
+.button-icon {
+  height: 2rem;
+  width: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:has(> img + img) {
+    :first-child {
+      position: absolute;
+      opacity: 1;
+      transition: opacity 100ms var(--curve-ease-in-out),
+        transform 250ms var(--curve-ease-in-out);
+    }
+
+    :last-child {
+      position: absolute;
+      opacity: 0;
+      transform: translateX(0.5rem);
+      transition: opacity 100ms var(--curve-ease-in-out),
+        transform 250ms var(--curve-ease-in-out);
+    }
+  }
+}
+
+.button-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-medium-contrast);
+  transition: font-weight 100ms var(--curve-ease-in-out);
 }

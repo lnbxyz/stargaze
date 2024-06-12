@@ -27,12 +27,14 @@ import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
           flex: 0,
           height: 0,
           opacity: 0,
+          margin: 0,
         }),
         animate(
           '500ms cubic-bezier(0.22, 1, 0.36, 1)',
           style({
             flex: '*',
             height: '*',
+            margin: '*',
             opacity: 1,
           })
         ),
@@ -41,6 +43,7 @@ import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
         style({
           flex: '*',
           height: '*',
+          margin: '*',
           opacity: 1,
         }),
         animate(
@@ -49,6 +52,7 @@ import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
             flex: 0,
             height: 0,
             opacity: 0,
+            margin: 0,
           })
         ),
       ]),
@@ -86,8 +90,8 @@ export class SidebarComponent {
     this.storeService.media.set([]);
   }
 
-  onAddMediaPressed() {
-    this.showSearch.set(true);
+  onToggleSearchPressed() {
+    this.showSearch.update((value) => !value);
   }
 
   removeMedia(media: Media) {

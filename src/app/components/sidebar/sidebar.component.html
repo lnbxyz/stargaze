@@ -1,8 +1,11 @@
 @if (media().length) {
 <div class="compare">
-  <button class="button back" (click)="onBackPressed()">
-    <img src="arrow-left.svg" />
-    <span> back to home </span>
+  <button class="button" (click)="onBackPressed()">
+    <div class="button-icon">
+      <img src="home.svg" />
+      <img src="arrow-left.svg" />
+    </div>
+    <span class="button-text"> home </span>
   </button>
 
   @for (item of media(); track $index) {
@@ -29,12 +32,13 @@
 
     <span class="compare-item-name">{{ item.name }}</span>
   </div>
-  } @if (!showSearch()) {
-  <button class="button add" (click)="onAddMediaPressed()">
-    <img src="plus.svg" />
-    <span> add </span>
-  </button>
   }
+  <button class="button" (click)="onToggleSearchPressed()">
+    <div class="button-icon">
+      <img [src]="showSearch() ? 'chevron-up.svg' : 'plus.svg'" />
+    </div>
+    <span class="button-text"> {{ showSearch() ? "hide" : "add title" }} </span>
+  </button>
 </div>
 @if (showSearch()) {
 <div class="search" [@smoothInOut]>
