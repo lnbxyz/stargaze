@@ -7,11 +7,24 @@
 
 .actors {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  grid-template-columns: repeat(2, max-content);
   flex: auto;
-  gap: 1rem;
-  padding: 1rem 1rem 1rem 0;
+  padding: 4rem 1rem 16rem 0;
   height: min-content;
+  justify-content: center;
+
+  &:has(> * + *) {
+    gap: 2rem 4rem;
+  }
+
+  > :nth-child(odd) {
+    justify-self: end;
+  }
+
+  > :nth-child(even) {
+    justify-self: start;
+    transform: translateY(4rem);
+  }
 }
 
 .loading {

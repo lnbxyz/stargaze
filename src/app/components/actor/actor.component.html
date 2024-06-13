@@ -1,45 +1,46 @@
-<div class="actor">
-  @if (actor().picture) {
-  <div class="actor-portrait">
-    <img
-      class="shimmer"
-      width="72"
-      height="108"
-      [ngSrc]="actor().picture"
-      [alt]="actor().name + ' portrait'"
-      [loaderParams]="{ type: 'profile' }"
-    />
-  </div>
-  } @else {
+@if (actor().picture) {
+<div class="portrait">
   <img
-    class="actor-portrait"
-    src="/missing-portrait.png"
-    [alt]="'Missing portrait for ' + actor().name"
+    class="shimmer"
+    width="128"
+    height="192"
+    [ngSrc]="actor().picture"
+    [alt]="actor().name + ' portrait'"
+    [loaderParams]="{ type: 'profile' }"
   />
-  }
+</div>
+} @else {
+<img
+  class="portrait"
+  src="/missing-portrait.png"
+  [alt]="'Missing portrait for ' + actor().name"
+/>
+}
 
-  <div class="actor-details">
-    <span class="actor-name">{{ actor().name }}</span>
-    <ul class="medias">
-      @for (credit of actor().credits; track $index) {
-      <li>
-        <span class="media-name">
-          {{ credit.media.name }}
-          @if (credit.media.date) {({{ credit.media.date | date : "y" }})}
-        </span>
-        <ul class="credits">
-          @for (character of credit.characters; track $index) {
-          <li class="credit">
-            {{ character.name || "Unknown" }}
-            @if (character.episodeCount) { ({{
-              character.episodeCount
+<div class="card">
+  <span class="actor-name">{{ actor().name }}</span>
+  <ul class="credits">
+    @for (credit of actor().credits; track $index) {
+    <li>
+      <span class="media-name">
+        {{ credit.media.name }}
+        @if (credit.media.date) {({{ credit.media.date | date : "y" }})}
+      </span>
+      <ul class="characters">
+        @for (character of credit.characters; track $index) {
+        <li class="character">
+          <span>{{ character.name || "Unnamed" }}</span>
+          @if (character.episodeCount) {
+          <span class="episode-count">
+            {{ character.episodeCount }} episode{{
+              character.episodeCount > 1 ? "s" : ""
             }}
-            episode{{ character.episodeCount > 1 ? "s" : "" }}) }
-          </li>
+          </span>
           }
-        </ul>
-      </li>
-      }
-    </ul>
-  </div>
+        </li>
+        }
+      </ul>
+    </li>
+    }
+  </ul>
 </div>

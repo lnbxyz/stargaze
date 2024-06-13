@@ -4,8 +4,8 @@
   <section class="actors">
     @if (loading()) { @for (item of [1,2,3,4,5,6]; track $index) {
     <div class="loading shimmer"></div>
-    } } @else { @for (actor of actors(); track actor.id) {
-    <s-actor [actor]="actor" />
+    } } @else { @for (actor of actors(); track actor.id; let i = $index) {
+    <s-actor [actor]="actor" [ngClass]="{ inverted: [2, 3].includes(i % 4) }" />
     } @empty {
     <p>no actors in common!</p>
     } }
