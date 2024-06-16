@@ -43,6 +43,7 @@
   height: max-content;
   margin: 1.5rem 0 0 -2rem;
   padding: 1rem 1.5rem 1rem 3rem;
+  max-width: 400px;
 
   ul {
     padding: 0;
@@ -83,6 +84,9 @@
   font-size: 1.25rem;
   font-weight: 500;
   color: var(--color-high-contrast);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.125rem 0.5rem;
 }
 
 .episode-count {

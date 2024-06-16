@@ -9,7 +9,8 @@
   left: 0;
   align-self: start;
   padding: 1rem 1rem 0 1rem;
-  width: 24rem;
+  min-width: 24rem;
+  max-width: 24rem;
 }
 
 .compare {
