@@ -8,7 +8,7 @@ export const routes: Routes = [
     component: HomePageComponent,
   },
   {
-    path: 'result',
+    path: 'view',
     component: ResultPageComponent,
   },
 ];

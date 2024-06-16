@@ -42,8 +42,8 @@ export class HomePageComponent {
     this.storeService.media.set([]);
 
     effect(() => {
-      if (this.storeService.media().length === 1) {
-        this.router.navigate(['result'], {
+      if (this.storeService.media().length === 2) {
+        this.router.navigate(['view'], {
           queryParams: {
             m: this.storeService.media().map((m) => `${m.type}_${m.id}`),
           },
