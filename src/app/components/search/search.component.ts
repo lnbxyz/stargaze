@@ -28,13 +28,19 @@ import { TvResult } from '../../tokens/interfaces/tmdb/tv-result.interface';
 import { MovieResult } from '../../tokens/interfaces/tmdb/movie-result.interface';
 import { StoreService } from '../../services/store.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { GetStartedComponent } from '../get-started/get-started.component';
 
 @Component({
   selector: 's-search',
   standalone: true,
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
-  imports: [ReactiveFormsModule, CommonModule, NgOptimizedImage],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    NgOptimizedImage,
+    GetStartedComponent,
+  ],
   providers: [
     {
       provide: IMAGE_LOADER,
@@ -80,6 +86,9 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
   results = signal<Media[]>([]);
   searchRef = viewChild<ElementRef<HTMLInputElement>>('search');
   focusOnLoad = input(false);
+  showGetStarted = input(false);
+  hasSearch = signal(false);
+  loading = signal(false);
 
   constructor(
     private tmdbService: TmdbService,
@@ -105,13 +114,22 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     this.searchFormControl.valueChanges
       .pipe(
         takeUntil(this.end),
-        tap((value) => !value && this.results.set([])),
+        map((value) => value?.trim() || ''),
+        tap((value) => {
+          if (value) {
+            this.loading.set(true);
+            this.hasSearch.set(true);
+          } else {
+            this.results.set([]);
+            this.hasSearch.set(false);
+          }
+        }),
         filter((value) => !!value),
         debounceTime(200)
       )
       .subscribe((value) => {
         this.tmdbService
-          .search(value!)
+          .search(value)
           .pipe(
             take(1),
             takeUntil(this.end),
@@ -164,7 +182,10 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
                   .filter((item) => item !== null) as Media[]
             )
           )
-          .subscribe((response) => this.results.set(response));
+          .subscribe((response) => {
+            this.results.set(response);
+            this.loading.set(false);
+          });
       });
   }
 

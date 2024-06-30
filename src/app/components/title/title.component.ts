@@ -1,12 +1,12 @@
 import { Component, signal } from '@angular/core';
 
 @Component({
-  selector: 's-info',
+  selector: 's-title',
   standalone: true,
-  templateUrl: 'info.component.html',
-  styleUrl: 'info.component.scss',
+  templateUrl: 'title.component.html',
+  styleUrl: 'title.component.scss',
 })
-export class InfoComponent {
+export class TitleComponent {
   options = [
     'is a venn diagram for stars',
     'helps you find crossovers',

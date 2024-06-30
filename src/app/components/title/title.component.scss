@@ -1,0 +1,52 @@
+:host {
+  display: block;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  :host {
+    display: flex;
+
+    h1 {
+      z-index: 1;
+    }
+
+    .splash {
+      z-index: 0;
+      left: 0;
+      top: 5.125rem;
+    }
+  }
+}
+
+h1 {
+  font-size: 4.5rem;
+  font-weight: 800;
+  background: linear-gradient(
+    60deg,
+    var(--color-secondary),
+    var(--color-primary),
+    var(--color-accent)
+  );
+  background-clip: border-box;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.splash {
+  position: absolute;
+  left: 11rem;
+  top: 4.75rem;
+
+  width: max-content;
+  padding: 0.25rem 0.75rem;
+
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-low-contrast);
+
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: 1rem;
+}

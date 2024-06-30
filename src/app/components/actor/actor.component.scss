@@ -23,7 +23,7 @@
   min-height: var(--portrait-size);
   background-color: var(--color-background);
   border-radius: calc(var(--portrait-size) / 2);
-  border: 1px solid var(--color-lowest-contrast);
+  border: 2px solid var(--color-border);
   object-fit: cover;
   position: relative;
   overflow: hidden;
@@ -38,7 +38,7 @@
   flex-direction: column;
   gap: 0.5rem;
   background-color: var(--color-surface);
-  border: 1px solid var(--color-lowest-contrast);
+  border: 2px solid var(--color-border);
   border-radius: 1rem;
   height: max-content;
   margin: 1.5rem 0 0 -2rem;
@@ -69,8 +69,8 @@
 
 .media-name {
   font-size: 0.875rem;
-  font-weight: 400;
-  color: var(--color-low-contrast);
+  font-weight: 500;
+  color: var(--color-medium-contrast);
   margin-bottom: 0.25rem;
 }
 
@@ -91,5 +91,5 @@
 
 .episode-count {
   font-weight: 300;
-  color: var(--color-medium-contrast);
+  color: var(--color-low-contrast);
 }

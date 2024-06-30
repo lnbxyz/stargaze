@@ -35,11 +35,10 @@
 
   &:hover {
     cursor: pointer;
-    background: var(--color-red-20);
+    background: var(--color-secondary);
 
     .compare-item-name {
-      color: var(--color-red);
-      font-weight: 500;
+      color: var(--color-primary);
     }
 
     .compare-item-poster {
@@ -75,7 +74,7 @@
   height: 41px;
   background-color: var(--color-background);
   border-radius: 0.25rem;
-  border: 1px solid var(--color-lowest-contrast);
+  border: 1px solid var(--color-border);
   object-fit: cover;
   opacity: 1;
   transition: opacity 100ms var(--curve-ease-in-out),
@@ -84,7 +83,7 @@
 
 .compare-item-name {
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--color-high-contrast);
   transition: font-weight 100ms var(--curve-ease-in-out);
 }
@@ -108,11 +107,10 @@
 
   &:hover {
     cursor: pointer;
-    background: var(--color-lowest-contrast);
+    background: var(--color-surface);
 
     .button-text {
       color: var(--color-high-contrast);
-      font-weight: 700;
     }
 
     .button-icon:has(> img + img) {
@@ -157,7 +155,7 @@
 .button-text {
   font-size: 1rem;
   font-weight: 500;
-  color: var(--color-medium-contrast);
+  color: var(--color-high-contrast);
   transition: font-weight 100ms var(--curve-ease-in-out);
 }
 

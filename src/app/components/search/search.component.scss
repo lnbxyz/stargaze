@@ -6,29 +6,25 @@
 }
 
 .search {
-  padding: 0.75rem 0.5rem;
+  padding: 0.75rem 1rem;
   font-size: 1.25rem;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--color-high-contrast);
   outline: none;
   flex: initial;
   border-radius: 1rem;
   z-index: 2;
 
-  --border-thickness: 1px;
+  --border-thickness: 2px;
   border: double var(--border-thickness) transparent;
   background-image: linear-gradient(var(--color-surface), var(--color-surface)),
-    linear-gradient(
-      to right,
-      var(--color-lowest-contrast),
-      var(--color-lowest-contrast)
-    );
+    linear-gradient(to right, var(--color-border), var(--color-border));
   background-origin: border-box;
   background-clip: padding-box, border-box;
   margin: calc(2px - var(--border-thickness));
 
   &::placeholder {
-    color: var(--color-low-contrast);
+    color: var(--color-medium-contrast);
     font-weight: 300;
   }
 
@@ -39,20 +35,24 @@
         var(--color-surface)
       ),
       linear-gradient(
-        to right,
-        var(--color-primary) -25%,
-        var(--color-accent) 125%
+        60deg,
+        var(--color-secondary),
+        var(--color-primary),
+        var(--color-accent)
       );
   }
 }
 
 .results {
-  padding: 2rem 0 4rem 0;
+  padding: 2rem 0.125rem;
   margin: -1rem 0 0;
   flex: auto;
   overflow: auto;
   scrollbar-width: none;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .result {
@@ -66,27 +66,25 @@
 
   transition: padding-left 100ms var(--curve-ease-in-out);
 
+  border: 1px solid transparent;
+
   &:not(:first-child) {
-    border-top: 1px solid var(--color-lowest-contrast);
+    border-top-color: var(--color-border);
   }
 
-  + .result:hover,
   &:hover + .result {
-    border-color: transparent;
+    border-top-color: transparent;
   }
 
   &:hover {
-    background-color: var(--color-lowest-contrast);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
     border-radius: 1rem;
     cursor: pointer;
     padding-left: 0.5rem;
 
     .result-name {
       font-weight: 900;
-    }
-
-    .result-description {
-      font-weight: 500;
     }
   }
 }
@@ -96,7 +94,7 @@
   height: 83px;
   background-color: var(--color-background);
   border-radius: 0.5rem;
-  border: 1px solid var(--color-lowest-contrast);
+  border: 1px solid var(--color-border);
   object-fit: cover;
 }
 
@@ -115,7 +113,12 @@
 
 .result-description {
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: 500;
   transition: font-weight 100ms var(--curve-ease-in-out);
   color: var(--color-medium-contrast);
+}
+
+.empty {
+  align-self: center;
+  padding: 0 2rem;
 }

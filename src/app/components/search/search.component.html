@@ -3,7 +3,7 @@
   [formControl]="searchFormControl"
   type="text"
   name="Search"
-  placeholder="search for a TV show or movie"
+  placeholder="search for movies or tv shows..."
   autocomplete="off"
   spellcheck="false"
   class="search"
@@ -36,5 +36,13 @@
       </span>
     </div>
   </li>
+  } @empty {
+  <div class="empty">
+    @if(hasSearch() ) { @if (!loading()) {
+    <p>no results!</p>
+    } } @else if (showGetStarted()) {
+    <s-get-started />
+    }
+  </div>
   }
 </ul>
