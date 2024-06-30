@@ -1,4 +1,11 @@
-import { Component, computed, effect, signal } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  computed,
+  effect,
+  output,
+  signal,
+} from '@angular/core';
 import { StoreService } from '../../services/store.service';
 import { Media } from '../../tokens/interfaces/media.interface';
 import { MediaComponent } from '../media/media.component';
@@ -62,10 +69,72 @@ import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
         ),
       ]),
     ]),
+    trigger('searchInOut', [
+      transition(':enter', [
+        style({
+          flex: 0,
+          opacity: 0,
+          margin: 0,
+          overflow: 'hidden',
+        }),
+        animate(
+          '500ms cubic-bezier(0.22, 1, 0.36, 1)',
+          style({
+            flex: '*',
+            opacity: 1,
+            margin: '*',
+            overflow: 'hidden',
+          })
+        ),
+      ]),
+      transition('compact => void', [
+        style({
+          opacity: 1,
+          transform: 'translateY(0)',
+          overflow: 'hidden',
+          height: '*',
+          margin: '*',
+        }),
+        animate(
+          '500ms cubic-bezier(0.22, 1, 0.36, 1)',
+          style({
+            opacity: 0,
+            height: 0,
+            margin: 0,
+          })
+        ),
+      ]),
+      transition('fullheight => void', [
+        style({
+          flex: '*',
+          opacity: 1,
+          transform: 'translateY(0)',
+          overflow: 'hidden',
+          height: '*',
+          margin: '*',
+        }),
+        animate(
+          '500ms cubic-bezier(0.22, 1, 0.36, 1)',
+          style({
+            flex: 0,
+            opacity: 0,
+            height: 0,
+            margin: 0,
+          })
+        ),
+      ]),
+    ]),
   ],
 })
 export class SidebarComponent {
   showSearch = signal(false);
+  searchOpen = output<boolean>();
+  width = signal(window.innerWidth);
+
+  @HostListener('window:resize')
+  onWindowResize() {
+    this.width.set(window.innerWidth);
+  }
 
   media = computed(() =>
     this.storeService.media().map((item) => {
@@ -89,6 +158,10 @@ export class SidebarComponent {
         allowSignalWrites: true,
       }
     );
+
+    effect(() => {
+      this.searchOpen.emit(this.showSearch());
+    });
   }
 
   onBackPressed() {

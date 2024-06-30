@@ -17,6 +17,7 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { Location } from '@angular/common';
 import { TvDetails } from '../../tokens/interfaces/tmdb/tv-details.interface';
 import { MovieDetails } from '../../tokens/interfaces/tmdb/movie-details.interface';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 's-result',
@@ -24,12 +25,43 @@ import { MovieDetails } from '../../tokens/interfaces/tmdb/movie-details.interfa
   imports: [CommonModule, ActorComponent, SidebarComponent],
   templateUrl: './result.component.html',
   styleUrl: './result.component.scss',
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({
+          opacity: 0,
+          transform: 'translateY(2rem)',
+        }),
+        animate(
+          '500ms cubic-bezier(0.22, 1, 0.36, 1)',
+          style({
+            opacity: 1,
+            transform: 'translateY(0)',
+          })
+        ),
+      ]),
+      transition(':leave', [
+        style({
+          opacity: 1,
+          transform: 'translateY(0)',
+        }),
+        animate(
+          '500ms cubic-bezier(0.22, 1, 0.36, 1)',
+          style({
+            opacity: 0,
+            transform: 'translateY(2rem)',
+          })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class ResultPageComponent {
   actors = signal<Actor[]>([]);
   loading = signal(true);
   resolvedQueryParams = signal(false);
   width = signal(window.innerWidth);
+  searchOpen = signal(false);
 
   @HostListener('window:resize')
   onWindowResize() {
@@ -176,5 +208,9 @@ export class ResultPageComponent {
       this.actors.set(result);
       this.loading.set(false);
     });
+  }
+
+  onSearchOpen(value: boolean) {
+    this.searchOpen.set(value);
   }
 }

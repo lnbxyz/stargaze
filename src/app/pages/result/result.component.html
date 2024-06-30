@@ -1,14 +1,16 @@
-<s-sidebar />
+<s-sidebar (searchOpen)="onSearchOpen($event)" />
 
 <section class="actors">
   @if (loading()) { @for (item of [1,2,3,4,5,6]; track $index) {
   <div class="loading shimmer"></div>
   } } @else { @for (actor of actors(); track actor.id; let i = $index) {
+  @if(width() > 960 || !searchOpen()) {
   <s-actor
+    [@slideInOut]
     [actor]="actor"
     [ngClass]="{ inverted: width() > 960 ? [2, 3].includes(i % 4) : false }"
   />
-  } @empty {
+  } } @empty {
   <p>no actors in common!</p>
   } }
 </section>

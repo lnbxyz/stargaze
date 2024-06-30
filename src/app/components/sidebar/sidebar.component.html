@@ -45,7 +45,7 @@
   </button>
 </div>
 @if (showSearch()) {
-<div class="search" [@smoothInOut]>
+<div class="search" [@searchInOut]="width() > 1280 ? 'fullheight' : 'compact'">
   <s-search [focusOnLoad]="true" />
 </div>
 } }
