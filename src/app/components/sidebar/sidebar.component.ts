@@ -4,7 +4,12 @@ import { Media } from '../../tokens/interfaces/media.interface';
 import { MediaComponent } from '../media/media.component';
 import { SearchComponent } from '../search/search.component';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { DatePipe, IMAGE_LOADER, NgOptimizedImage } from '@angular/common';
+import {
+  CommonModule,
+  DatePipe,
+  IMAGE_LOADER,
+  NgOptimizedImage,
+} from '@angular/common';
 import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
 
 @Component({
@@ -12,7 +17,7 @@ import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
   standalone: true,
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
-  imports: [MediaComponent, SearchComponent, NgOptimizedImage],
+  imports: [MediaComponent, SearchComponent, NgOptimizedImage, CommonModule],
   providers: [
     DatePipe,
     {

@@ -125,6 +125,38 @@
       }
     }
   }
+
+  &.highlight {
+    background: linear-gradient(
+      -60deg,
+      var(--color-surface) 25%,
+      var(--color-accent)
+    );
+    background-size: 300%;
+    background-position-x: 100%;
+    animation-name: highlight;
+    animation-iteration-count: infinite;
+    animation-duration: 12s;
+    animation-timing-function: var(--curve-ease-in-out);
+  }
+}
+
+@keyframes highlight {
+  0% {
+    background-position-x: 100%;
+  }
+  25% {
+    background-position-x: 25%;
+  }
+  50% {
+    background-position-x: 100%;
+  }
+  75% {
+    background-position-x: 75%;
+  }
+  100% {
+    background-position-x: 100%;
+  }
 }
 
 .button-icon {
