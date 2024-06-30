@@ -8,9 +8,19 @@
   top: 0;
   left: 0;
   align-self: start;
-  padding: 1rem 1rem 0 1rem;
+  padding: 1rem;
   min-width: 24rem;
   max-width: 24rem;
+  background: var(--color-background);
+}
+
+@media (max-width: 1280px) {
+  :host {
+    height: unset;
+    align-self: stretch;
+    min-width: 100%;
+    z-index: 1;
+  }
 }
 
 .compare {

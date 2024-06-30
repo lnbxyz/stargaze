@@ -1,4 +1,4 @@
-.result {
+:host {
   display: flex;
   flex-direction: row;
   min-height: 100vh;
@@ -9,7 +9,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   flex: auto;
-  padding: 4rem 1rem 16rem 0;
+  padding: 4rem 1rem 16rem;
   height: min-content;
   justify-content: center;
 
@@ -24,6 +24,32 @@
   > :nth-child(even) {
     justify-self: start;
     transform: translateY(4rem);
+  }
+}
+
+@media (max-width: 1280px) {
+  :host {
+    flex-direction: column;
+    min-height: unset;
+  }
+}
+
+@media (max-width: 960px) {
+  :host {
+    .actors {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 1rem 1rem 8rem;
+
+      > :nth-child(odd) {
+        justify-self: stretch;
+      }
+
+      > :nth-child(even) {
+        justify-self: stretch;
+        transform: unset;
+      }
+    }
   }
 }
 

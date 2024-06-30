@@ -1,4 +1,4 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component, HostListener, effect, signal } from '@angular/core';
 import { TmdbService } from '../../services/tmdb.service';
 import { forkJoin, take } from 'rxjs';
 import {
@@ -29,6 +29,12 @@ export class ResultPageComponent {
   actors = signal<Actor[]>([]);
   loading = signal(true);
   resolvedQueryParams = signal(false);
+  width = signal(window.innerWidth);
+
+  @HostListener('window:resize')
+  onWindowResize() {
+    this.width.set(window.innerWidth);
+  }
 
   constructor(
     private tmdbService: TmdbService,

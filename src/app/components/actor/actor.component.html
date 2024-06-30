@@ -1,13 +1,24 @@
 @if (actor().picture) {
 <div class="portrait">
+  @if (width() > 960) {
   <img
     class="shimmer"
-    width="128"
+    width="128 "
     height="192"
     [ngSrc]="actor().picture"
     [alt]="actor().name + ' portrait'"
     [loaderParams]="{ type: 'profile' }"
   />
+  } @else {
+  <img
+    class="shimmer"
+    width="96"
+    height="144"
+    [ngSrc]="actor().picture"
+    [alt]="actor().name + ' portrait'"
+    [loaderParams]="{ type: 'profile' }"
+  />
+  }
 </div>
 } @else {
 <img

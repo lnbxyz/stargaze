@@ -34,6 +34,7 @@
 }
 
 .card {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -92,4 +93,14 @@
 .episode-count {
   font-weight: 300;
   color: var(--color-low-contrast);
+}
+@media (max-width: 960px) {
+  .portrait {
+    --portrait-size: 96px;
+  }
+
+  .card {
+    margin: 1.5rem 0 0 -2rem;
+    padding: 1rem 1.5rem 1rem 3rem;
+  }
 }
