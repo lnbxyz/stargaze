@@ -1,0 +1,40 @@
+{
+  "name": "stargaze",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#020017",
+  "theme_color": "#020017",
+  "description": "pick any number of shows or movies and discover stars who star in all of them",
+  "icons": [
+    {
+      "src": "touch/homescreen48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "touch/homescreen72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "touch/homescreen96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "touch/homescreen144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "touch/homescreen168.png",
+      "sizes": "168x168",
+      "type": "image/png"
+    },
+    {
+      "src": "touch/homescreen192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
