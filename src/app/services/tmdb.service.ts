@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environment';
 import { PagedResponse } from '../tokens/interfaces/tmdb/paged-response.interface';
 import { TvResult } from '../tokens/interfaces/tmdb/tv-result.interface';
 import { MovieResult } from '../tokens/interfaces/tmdb/movie-result.interface';
