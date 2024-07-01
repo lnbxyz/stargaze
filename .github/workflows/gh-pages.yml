@@ -46,7 +46,7 @@ jobs:
     - name: upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: 'dist'
+        path: 'dist/stargaze/browser'
 
     - name: deploy to pages
       id: deployment
