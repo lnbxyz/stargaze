@@ -1,6 +1,6 @@
 # stargaze
 
-pick any number of shows orm movies and discover stars who appear in all of them
+pick any number of shows or movies and discover stars who appear in all of them
 
 ## running locally
 
