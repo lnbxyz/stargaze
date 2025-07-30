@@ -5,7 +5,6 @@ import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
 
 @Component({
   selector: 's-actor',
-  standalone: true,
   templateUrl: 'actor.component.html',
   styleUrl: 'actor.component.scss',
   imports: [NgOptimizedImage, CommonModule],

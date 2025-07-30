@@ -7,7 +7,6 @@ import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 's-home',
-  standalone: true,
   imports: [SearchComponent, TitleComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

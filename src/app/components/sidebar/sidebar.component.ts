@@ -21,7 +21,6 @@ import { TMDB_IMAGE_LOADER } from '../../tokens/consts/tmdb-image-loader.const';
 
 @Component({
   selector: 's-sidebar',
-  standalone: true,
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   imports: [MediaComponent, SearchComponent, NgOptimizedImage, CommonModule],

@@ -21,7 +21,6 @@ import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 's-result',
-  standalone: true,
   imports: [CommonModule, ActorComponent, SidebarComponent],
   templateUrl: './result.component.html',
   styleUrl: './result.component.scss',

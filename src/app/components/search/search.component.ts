@@ -32,7 +32,6 @@ import { GetStartedComponent } from '../get-started/get-started.component';
 
 @Component({
   selector: 's-search',
-  standalone: true,
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
   imports: [
